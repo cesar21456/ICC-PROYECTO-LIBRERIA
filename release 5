@@ -78,6 +78,9 @@ def sacar_libros(ñ):   #variables utilizadas: i,r,t,s,cantS,a,b,c,d,e,f,g,h,j,k
   return ""
 
 
+
+
+
 def devolver_libros(p):
   q=Usuarios.index(p)
   if len(Usuarios)<=1:
@@ -118,8 +121,20 @@ def registrar_usuario():
     ids=registrar_usuario()
   return ids
   
-def registro_usuario(n):
-  pass
+def comprobar_libros_sacados(asd):
+  print(len(Usuarios))
+  print(len(libros_sacados))
+  if len(Usuarios)==len(libros_sacados):
+    if cantidad_sacada[Usuarios.index(asd)]=="" or cantidad_sacada[Usuarios.index(asd)]=="0" or cantidad_sacada[Usuarios.index(asd)]=="(0,0)":
+      return "continue"
+    else:
+      return "stop"
+  elif len(Usuarios)>len(libros_sacados):
+    return "continue"
+  return "" 
+    
+    
+
 
 for i in range(2):
   while i>=0:
@@ -129,8 +144,10 @@ for i in range(2):
       lol()
     if f==2 or f==3:
       reg=registrar_usuario()
-      reg2=Usuarios.index(reg)
       if f==2:
+        if comprobar_libros_sacados(reg)=="continue":
           sacar_libros(reg)
+        else:
+          print("esta persona ya debe libros")
       if f==3:
         devolver_libros(reg)
