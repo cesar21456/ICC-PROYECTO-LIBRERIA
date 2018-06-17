@@ -1,70 +1,65 @@
-libros_cantidad={"mago de oz":5,"narnia":2,"los viajes de gulliver":3,"paco yunque":7}
-megaregistro=[]
-Usuarios=["100000000"]
-libros_sacados=["ninguno"]
-cantidad_sacada=[0]
+libros_cantidad={"mago de oz":5,"narnia":2,"los viajes de gulliver":3,"paco yunque":7}    #base de datos inicial de libros y cantidad de libros (lo podemos cambiar o aumentar a placer)
+megaregistro=[]          #aun no lo uso
+Usuarios=["100000000"]    #base de datos de los usuarios
+libros_sacados=["ninguno"]  # base de datos de los libros sacados de los usuarios (max 2 separados por comas)
+cantidad_sacada=[0]         # base de datos de la cantidad de libros sacados por los usuarios (max 2 separados por comas)
 
-def lol():
+def lol():        #funcion añadir libro a la base de datos
   print("inserte libro")
-  t=str(input())
-  if t!="acabe" and t not in libros_cantidad:
+  t=str(input())        #nombre del libro que quieres añadir
+  if t!="acabe" and t not in libros_cantidad:     # para evitar la repeticion de datos y la repeticion de una misma funcion (no llamar a la funcion 2 veces seguidas por ejemplo)
     print("inserte cantidad existente")
-    r=int(input())
+    r=int(input())        #cantidad de libros que vas a meter de ese mismo titulo
     if r>=1:
-      libros_cantidad[t]=r
+      libros_cantidad[t]=r      #Insertamos el libro y su cantidad como un diccionario en la base de datos inicial libros_cantidad
     if r==0:
-      lol()
-  print(libros_cantidad)
+      lol()             #para evitar poner "0 libros" 
+  print(libros_cantidad)      #todo lo que sigue de aqui para abajo de la funcion solo es para ver las bases de datos (no tiene uso)
   print(Usuarios)
   print(libros_sacados)
   print(cantidad_sacada)
-  return ""
+  return ""     #no necesitas que te devuelva ninguna cosa
 
-def sacar_libros(ñ):   #variables utilizadas: i,r,t,s,cantS,a,b,c,d,e,f,g,h,j,k,l,m,ids,reg,ñ,n,o,p,registro,registro2
-  print("que libros desea sacar?(entre comas)")
+def sacar_libros(ñ):   #variables utilizadas: i,r,t,s,cantS,a,b,c,d,e,f,g,h,j,k,l,m,ids,reg,ñ,n,o,p,registro,registro2    #no usar estas variables
+  print("que libros desea sacar?(entre comas)")  
   registro=""
   registro2=""
-  s=str(input())
-  s=s.split(",")
-  for j in range(len(s)):
+  s=str(input())        #Aqui se insertan los libros (1 o 2)(aunque pueden ser mas, pero lo prohibiremos con un manual al usuario)
+  s=s.split(",")        #Para separar los nombres de los libros por las comas en una lista 
+  for j in range(len(s)):         #este for revisa si es que los libros que se quieren sacar estan en la base de datos inicial, si no, los borra de la peticion
     if s[j] not in libros_cantidad:
       print("el libro",s[j],"no existe en la base de datos")
-      s.remove(s[j])
+      s.remove(s[j])          # remueve el libro que no existe
   n=Usuarios.index(ñ)
-  for k in range(len(s)):
-    if k>2:
-      print("no inserte mas de dos libros porfavor")
-      sacar_libros(ñ)
-    if k>=1:
-      registro=registro+","+s[k]
-    else:
-      registro=registro+s[k]
-    print("inserte la cantidad de ejemplares a sacar de libro",s[k],":")
-    cantS=int(input())
-    a=0
-    for p in libros_cantidad:
-      if p!=s[k]:
-        a+=1
-      else: 
-        a+=1
-        break
-    if cantS>=1 and libros_cantidad[s[k]]-cantS>=0:
-      b=libros_cantidad[s[k]]-cantS
-      del libros_cantidad[s[k]]
-      libros_cantidad[s[k]]=b
-    else:
-      print("No se tiene cantidad deseada. Solo quedan:",libros_cantidad[s[k]],"libros")
-    if registro2!="":
-      registro2=registro2+","+str(cantS)
-    else:
-      registro2=str(cantS)
-  if registro!="":
-    if len(Usuarios)>len(libros_sacados):
+  if len(s)<3:        #evitar que saquen mas de 2 libros a la vez
+    for k in range(len(s)):   #recorre cada uno de los 2 o 1 libros que quiere sacar
+      if k>=1:        #lee el N° 1)         2) si es el segundo libro, le aumenta la coma al registro y pone el segundo nombre luego
+        registro=registro+","+s[k]
+      else:
+        registro=registro+s[k]      #1) si es que es el primer libro, solo pone el nombre en el registro (regresa de donde viniste)
+      print("inserte la cantidad de ejemplares a sacar de libro",s[k],":")  # te pide cuantos libros quieres sacar del primer o segundo libro
+      cantS=int(input())    #aqui se guarda la cantidad del libro que se quiere sacar (el primero y/o del segundo)
+      if cantS>=1 and libros_cantidad[s[k]]-cantS>=0:       # si es que la cantidad de lo que se quiere sacar es mayor a lo que se tiene o si es 1 o mas (para evitar sacar 0)
+        b=libros_cantidad[s[k]]-cantS       #cantidad que se tenia menos la cantidad que se quiere sacar
+        del libros_cantidad[s[k]]         #eliminas en la base de datos el diccionario de libro y la cantidad que se tenia inicialmente
+        libros_cantidad[s[k]]=b     # se vuelve a ingresar el diccionario pero con la cantidad de libros despues de sacarlos
+      else:
+        print("No se tiene cantidad deseada. Solo quedan:", libros_cantidad[s[k]],"libros")   # si la cantidad excede, te niega la accion anterior (no cambia nada)
+        sacar_libros(ñ)     #te devuelve a hacer denuevo la funcion entera
+      if registro2!="":         #este if te registra la cantidad de libros en una variable (por ejemplo 1,1 significa que sacaste un libro del primero y un libro del segundo)
+        registro2=registro2+","+str(cantS)    
+      else:
+        registro2=str(cantS)
+  else:         #en caso de que la cantidad de libros que se solicite sea mayor que 2, se niega todo y te devuelve a la funcion
+    print("porfavor no ponga mas de dos libros a la vez")
+    sacar_libros(ñ)
+  if registro!="":          #este if afirma si el usuario saco algun libro o no 
+    if len(Usuarios)>len(libros_sacados):     # si es que el usuario ha sido registrado y aun no ha sacado ningun libro solo insertas los nombres
       libros_sacados.insert(n,registro)
     else:
-      libros_sacados.insert(n,registro)
+      libros_sacados.insert(n,registro)     #si no, cambias los registros de los nombres por otros.
       libros_sacados.pop((n+1))
-  if registro2!="":
+  if registro2!="":         # este if hace lo mismo pero con las cantidades de los libros sacados
     if len(Usuarios)>len(cantidad_sacada):
       cantidad_sacada.append(registro2)
     else:
@@ -76,7 +71,6 @@ def sacar_libros(ñ):   #variables utilizadas: i,r,t,s,cantS,a,b,c,d,e,f,g,h,j,k
   print(libros_sacados)
   print(cantidad_sacada)
   return ""
-
 
 
 
