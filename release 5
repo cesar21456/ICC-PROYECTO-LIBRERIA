@@ -1,12 +1,12 @@
 libros_cantidad={"mago de oz":5,"narnia":2,"los viajes de gulliver":3,"paco yunque":7}    #base de datos inicial de libros y cantidad de libros (lo podemos cambiar o aumentar a placer)
-megaregistro=[]          #aun no lo uso
+
 Usuarios=["100000000"]    #base de datos de los usuarios
 libros_sacados=["ninguno"]  # base de datos de los libros sacados de los usuarios (max 2 separados por comas)
 cantidad_sacada=[0]         # base de datos de la cantidad de libros sacados por los usuarios (max 2 separados por comas)
 
 
 
-def lol():        #funcion añadir libro a la base de datos
+def añadir_libro():        #funcion añadir libro a la base de datos
   print("inserte libro")
   t=str(input())        #nombre del libro que quieres añadir
   if t!="acabe" and t not in libros_cantidad:     # para evitar la repeticion de datos y la repeticion de una misma funcion (no llamar a la funcion 2 veces seguidas por ejemplo)
@@ -15,7 +15,7 @@ def lol():        #funcion añadir libro a la base de datos
     if r>=1:
       libros_cantidad[t]=r      #Insertamos el libro y su cantidad como un diccionario en la base de datos inicial libros_cantidad
     if r==0:
-      lol()             #para evitar poner "0 libros" 
+      añadir_libro()             #para evitar poner "0 libros" 
   print(libros_cantidad)      #todo lo que sigue de aqui para abajo de la funcion solo es para ver las bases de datos (no tiene uso)
   print(Usuarios)
   print(libros_sacados)
@@ -23,7 +23,8 @@ def lol():        #funcion añadir libro a la base de datos
   return ""     #no necesitas que te devuelva ninguna cosa
 
 def sacar_libros(ñ):   #variables utilizadas: i,r,t,s,cantS,a,b,c,d,e,f,g,h,j,k,l,m,ids,reg,ñ,n,o,p,registro,registro2    #no usar estas variables
-  print("que libros desea sacar?(entre comas)")  
+  print("que libros 
+   sacar?(entre comas)")  
   registro=""
   registro2=""
   s=str(input())        #Aqui se insertan los libros (1 o 2)(aunque pueden ser mas, pero lo prohibiremos con un manual al usuario)
@@ -81,7 +82,7 @@ def devolver_libros(p):
   q=Usuarios.index(p)
   if len(Usuarios)<=1:
     print("no hay ningun usuario registrado que deba libros")
-  elif cantidad_sacada[q]!=0 or cantidad_sacada[q]!="0" or cantidad_sacada!="(0,0)":  #aqui me quede
+  elif cantidad_sacada[q]!=0 or cantidad_sacada[q]!="0" or cantidad_sacada!="(0,0)":  
     if cantidad_sacada[q]=="(0,0)":
       cantidad_sacada.insert(q,"0")
       cantidad_sacada.pop(q+1)
@@ -117,7 +118,7 @@ def registrar_usuario():
   if ids in Usuarios:
     return ids
   else:
-    print("su usuario no esta registrado o no tiene")
+    print("su usuario no esta registrado, o no tiene")
     ids=registrar_usuario()
   return ids
   
@@ -141,7 +142,7 @@ for i in range(2):
     print("(1)añadir a base de datos/(2)sacar/(3)poner libros")
     f=int(input())
     if f==1:
-      lol()
+      añadir_libro()
     if f==2 or f==3:
       reg=registrar_usuario()
       if f==2:
